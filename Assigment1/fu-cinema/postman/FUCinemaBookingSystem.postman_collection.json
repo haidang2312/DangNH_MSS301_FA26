@@ -1147,11 +1147,11 @@
           ]
         },
         {
-          "name": "3.6 DELETE /api/genres/{{seedGenreActionId}}",
+          "name": "3.6 DELETE /api/genres/{{seedGenreScifiId}}",
           "request": {
             "method": "DELETE",
             "header": [],
-            "url": "{{gateway}}/api/genres/{{seedGenreActionId}}",
+            "url": "{{gateway}}/api/genres/{{seedGenreScifiId}}",
             "auth": {
               "type": "bearer",
               "bearer": [
@@ -1246,7 +1246,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\"roomName\": \"Room Alternate {{$guid}}\", \"roomType\": \"STANDARD\", \"seatRows\": 5, \"seatsPerRow\": 8, \"roomStatus\": \"ACTIVE\"}",
+              "raw": "{\n  \"roomName\": \"Alt {{$guid}}\",\n  \"roomType\": \"STANDARD\",\n  \"seatRows\": 5,\n  \"seatsPerRow\": 8,\n  \"roomStatus\": \"ACTIVE\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
