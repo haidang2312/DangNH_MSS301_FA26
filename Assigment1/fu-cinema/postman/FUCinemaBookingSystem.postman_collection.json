@@ -215,8 +215,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 401\",()=>pm.response.to.have.status(401));",
-                  "const j=pm.response.json();"
+                  "pm.test(\"Status 401\",()=>pm.response.to.have.status(401));"
                 ]
               }
             }
@@ -245,8 +244,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 401\",()=>pm.response.to.have.status(401));",
-                  "const j=pm.response.json();"
+                  "pm.test(\"Status 401\",()=>pm.response.to.have.status(401));"
                 ]
               }
             }
@@ -645,8 +643,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 403\",()=>pm.response.to.have.status(403));",
-                  "const j=pm.response.json();"
+                  "pm.test(\"Status 403\",()=>pm.response.to.have.status(403));"
                 ]
               }
             }
@@ -805,8 +802,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 200\",()=>pm.response.to.have.status(200));",
-                  "const j=pm.response.json();"
+                  "pm.test(\"Status 200\",()=>pm.response.to.have.status(200));"
                 ]
               }
             }
@@ -895,8 +891,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 403\",()=>pm.response.to.have.status(403));",
-                  "const j=pm.response.json();"
+                  "pm.test(\"Status 403\",()=>pm.response.to.have.status(403));"
                 ]
               }
             }
@@ -1057,8 +1052,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 403\",()=>pm.response.to.have.status(403));",
-                  "const j=pm.response.json();"
+                  "pm.test(\"Status 403\",()=>pm.response.to.have.status(403));"
                 ]
               }
             }
@@ -1146,8 +1140,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 200\",()=>pm.response.to.have.status(200));",
-                  "const j=pm.response.json();"
+                  "pm.test(\"Status 200\",()=>pm.response.to.have.status(200));"
                 ]
               }
             }
@@ -1289,8 +1282,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 401\",()=>pm.response.to.have.status(401));",
-                  "const j=pm.response.json();"
+                  "pm.test(\"Status 401\",()=>pm.response.to.have.status(401));"
                 ]
               }
             }
@@ -1522,8 +1514,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 200\",()=>pm.response.to.have.status(200));",
-                  "const j=pm.response.json();"
+                  "pm.test(\"Status 200\",()=>pm.response.to.have.status(200));"
                 ]
               }
             }
@@ -2640,8 +2631,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 403\",()=>pm.response.to.have.status(403));",
-                  "const j=pm.response.json();"
+                  "pm.test(\"Status 403\",()=>pm.response.to.have.status(403));"
                 ]
               }
             }
@@ -2677,8 +2667,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 401\",()=>pm.response.to.have.status(401));",
-                  "const j=pm.response.json();"
+                  "pm.test(\"Status 401\",()=>pm.response.to.have.status(401));"
                 ]
               }
             }
@@ -2812,8 +2801,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 403\",()=>pm.response.to.have.status(403));",
-                  "const j=pm.response.json();"
+                  "pm.test(\"Status 403\",()=>pm.response.to.have.status(403));"
                 ]
               }
             }
@@ -2842,8 +2830,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 200\",()=>pm.response.to.have.status(200));",
-                  "const j=pm.response.json();"
+                  "pm.test(\"Status 200\",()=>pm.response.to.have.status(200));"
                 ]
               }
             }
@@ -2872,8 +2859,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 403\",()=>pm.response.to.have.status(403));",
-                  "const j=pm.response.json();"
+                  "pm.test(\"Status 403\",()=>pm.response.to.have.status(403));"
                 ]
               }
             }
@@ -3009,8 +2995,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 200\",()=>pm.response.to.have.status(200));",
-                  "const j=pm.response.json();"
+                  "pm.test(\"Status 200\",()=>pm.response.to.have.status(200));"
                 ]
               }
             }
@@ -3039,8 +3024,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 403\",()=>pm.response.to.have.status(403));",
-                  "const j=pm.response.json();"
+                  "pm.test(\"Status 403\",()=>pm.response.to.have.status(403));"
                 ]
               }
             }
@@ -3178,8 +3162,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 403\",()=>pm.response.to.have.status(403));",
-                  "const j=pm.response.json();"
+                  "pm.test(\"Status 403\",()=>pm.response.to.have.status(403));"
                 ]
               }
             }
