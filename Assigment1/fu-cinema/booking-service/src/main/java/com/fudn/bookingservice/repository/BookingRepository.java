@@ -15,4 +15,15 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     List<Booking> findAllByOrderByBookingDateDesc();
 
+    // TODO 9.1: [from, to) va sap xep GIAM DAN
+    @Query("""
+            select b from Booking b
+            where b.bookingStatus = :status
+              and b.bookingDate >= :from
+              and b.bookingDate < :to
+            order by b.bookingDate desc
+            """)
+    List<Booking> findForReport(@Param("status") BookingStatus status,
+                                @Param("from") LocalDateTime from,
+                                @Param("to") LocalDateTime to);
 }
