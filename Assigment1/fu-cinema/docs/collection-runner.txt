@@ -1,0 +1,449 @@
+newman.cmd : (node:8988) [DEP0176] DeprecationWarning: fs.F_OK is deprecated, use fs.constants.F_OK instead
+At line:2 char:71
++ ... _runner.py; & C:\Users\DELL\AppData\Local\cinema-tools\node_modules\. ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:8988) [DE...ts.F_OK instead:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+(Use `node --trace-deprecation ...` to show where the warning was created)
+newman
+
+FUCinemaBookingSystem
+
+□ 01-Auth
+└ 1.1 POST /api/auth/login
+  POST http://localhost:9000/api/auth/login [200 OK, 668B, 2.8s]
+  √  Status 200
+  √  Admin role and token
+
+└ 1.2 POST /api/auth/login
+  POST http://localhost:9000/api/auth/login [200 OK, 674B, 951ms]
+  √  Status 200
+  √  Customer identity
+
+└ 1.3 POST /api/auth/login
+  POST http://localhost:9000/api/auth/login [401 Unauthorized, 486B, 447ms]
+  √  Status 401
+  √  Unified error format
+
+└ 1.4 POST /api/auth/login
+  POST http://localhost:9000/api/auth/login [403 Forbidden, 514B, 333ms]
+  √  Status 403
+  √  Unified error format
+
+└ 1.5 POST /api/auth/login
+  POST http://localhost:9000/api/auth/login [400 Bad Request, 485B, 328ms]
+  √  Status 400
+  √  Unified error format
+
+└ 1.6 GET /api/customers/me
+  GET http://localhost:9000/api/customers/me [401 Unauthorized, 408B, 63ms]
+  √  Status 401
+
+└ 1.7 GET /api/customers/me
+  GET http://localhost:9000/api/customers/me [401 Unauthorized, 583B, 24ms]
+  √  Status 401
+
+□ 02-Customer
+└ 2.1 POST /api/customers/register
+  POST http://localhost:9000/api/customers/register [201 Created, 527B, 551ms]
+  √  Status 201
+  √  Active and password hidden
+
+└ 2.2 POST /api/customers/register
+  POST http://localhost:9000/api/customers/register [409 Conflict, 497B, 125ms]
+  √  Status 409
+  √  Unified error format
+
+└ 2.3 POST /api/customers/register
+  POST http://localhost:9000/api/customers/register [400 Bad Request, 653B, 111ms]
+  √  Status 400
+  √  Validation customerName
+  √  Validation telephone
+  √  Validation email
+  √  Validation customerBirthday
+  √  Validation password
+  √  Unified error format
+
+└ 2.4 POST /api/auth/login
+  POST http://localhost:9000/api/auth/login [200 OK, 753B, 342ms]
+  √  Status 200
+
+└ 2.5 GET /api/customers/me
+  GET http://localhost:9000/api/customers/me [200 OK, 493B, 121ms]
+  √  Status 200
+  √  Own profile
+
+└ 2.6 PUT /api/customers/me
+  PUT http://localhost:9000/api/customers/me [200 OK, 493B, 124ms]
+  √  Status 200
+  √  Unicode profile preserved
+
+└ 2.7 PUT /api/customers/me/password
+  PUT http://localhost:9000/api/customers/me/password [400 Bad Request, 466B, 364ms]
+  √  Status 400
+  √  Unified error format
+
+└ 2.8 PUT /api/customers/me/password
+  PUT http://localhost:9000/api/customers/me/password [204 No Content, 282B, 631ms]
+  √  Status 204
+
+└ 2.9 POST /api/auth/login
+  POST http://localhost:9000/api/auth/login [200 OK, 753B, 359ms]
+  √  Status 200
+
+└ 2.10 GET /api/customers
+  GET http://localhost:9000/api/customers [403 Forbidden, 509B, 16ms]
+  √  Status 403
+
+└ 2.11 GET /api/customers?keyword=gmail
+  GET http://localhost:9000/api/customers?keyword=gmail [200 OK, 1.42kB, 153ms]
+  √  Status 200
+  √  Customers without passwords
+
+└ 2.12 GET /api/customers/99999
+  GET http://localhost:9000/api/customers/99999 [404 Not Found, 493B, 103ms]
+  √  Status 404
+  √  Unified error format
+
+└ 2.13 POST /api/customers
+  POST http://localhost:9000/api/customers [201 Created, 538B, 477ms]
+  √  Status 201
+
+└ 2.14 PUT /api/customers/{{adminCreatedId}}
+  PUT http://localhost:9000/api/customers/7 [200 OK, 536B, 192ms]
+  √  Status 200
+
+└ 2.15 DELETE /api/customers/{{adminCreatedId}}
+  DELETE http://localhost:9000/api/customers/7 [204 No Content, 282B, 112ms]
+  √  Status 204
+
+└ 2.16 GET /api/customers/{{adminCreatedId}}
+  GET http://localhost:9000/api/customers/7 [200 OK, 538B, 167ms]
+  √  Status 200
+  √  Soft delete
+
+└ 2.17 GET /api/customers/me
+  GET http://localhost:9000/api/customers/me [403 Forbidden, 509B, 16ms]
+  √  Status 403
+
+└ 2.18 GET /api/customers/me
+  GET http://localhost:9000/api/customers/me [200 OK, 493B, 107ms]
+  √  Status 200
+  √  Spoofed identity replaced
+
+□ 03-Genre-Room
+└ 3.1 GET /api/genres
+  GET http://localhost:9000/api/genres [200 OK, 1.02kB, 89ms]
+  √  Status 200
+  √  Seed genres
+
+└ 3.2 POST /api/genres
+  POST http://localhost:9000/api/genres [201 Created, 440B, 86ms]
+  √  Status 201
+
+└ 3.3 POST /api/genres
+  POST http://localhost:9000/api/genres [403 Forbidden, 509B, 20ms]
+  √  Status 403
+
+└ 3.4 POST /api/genres
+  POST http://localhost:9000/api/genres [409 Conflict, 489B, 76ms]
+  √  Status 409
+  √  Unified error format
+
+└ 3.5 PUT /api/genres/{{genreId}}
+  PUT http://localhost:9000/api/genres/6ac5ad44e2c1d505aac6faaf [200 OK, 436B, 220ms]
+  √  Status 200
+
+└ 3.6 DELETE /api/genres/{{seedGenreScifiId}}
+  DELETE http://localhost:9000/api/genres/66f000000000000000000005 [409 Conflict, 515B, 117ms]
+  √  Status 409
+  √  Unified error format
+
+└ 3.7 POST /api/rooms
+  POST http://localhost:9000/api/rooms [201 Created, 492B, 131ms]
+  √  Status 201
+  √  Room capacity
+
+└ 3.7b Create separate room for overlap test
+  POST http://localhost:9000/api/rooms [201 Created, 512B, 164ms]
+  √  Status 201
+
+└ 3.8 GET /api/rooms
+  GET http://localhost:9000/api/rooms [401 Unauthorized, 408B, 49ms]
+  √  Status 401
+
+└ 3.9 POST /api/rooms
+  POST http://localhost:9000/api/rooms [400 Bad Request, 624B, 74ms]
+  √  Status 400
+  √  Unified error format
+
+└ 3.10 POST /api/rooms
+  POST http://localhost:9000/api/rooms [400 Bad Request, 456B, 99ms]
+  √  Status 400
+  √  Unified error format
+
+□ 04-Movie
+└ 4.1 POST /api/movies
+  POST http://localhost:9000/api/movies [201 Created, 690B, 157ms]
+  √  Status 201
+  √  Genre join and ObjectId
+
+└ 4.2 GET /api/movies?keyword=galaxy
+  GET http://localhost:9000/api/movies?keyword=galaxy [200 OK, 687B, 130ms]
+  √  Status 200
+  √  Keyword search
+
+└ 4.3 GET /api/movies?status=NOW_SHOWING&genreId={{seedGenreScifiId}}
+  GET http://localhost:9000/api/movies?status=NOW_SHOWING&genreId=66f000000000000000000005 [200 OK, 687B, 92ms]
+  √  Status 200
+  √  Movie filter 66f200000000000000000001
+
+└ 4.4 PUT /api/movies/{{movieId}}
+  PUT http://localhost:9000/api/movies/6ac5ad46e2c1d505aac6fab2 [200 OK, 685B, 391ms]
+  √  Status 200
+
+└ 4.5 GET /api/movies/{{notFoundId}}
+  GET http://localhost:9000/api/movies/66f9ffffffffffffffffffff [404 Not Found, 525B, 224ms]
+  √  Status 404
+  √  Unified error format
+
+└ 4.6 POST /api/movies
+  POST http://localhost:9000/api/movies [400 Bad Request, 473B, 141ms]
+  √  Status 400
+  √  Unified error format
+
+└ 4.7 POST /api/movies
+  POST http://localhost:9000/api/movies [404 Not Found, 500B, 113ms]
+  √  Status 404
+  √  Unified error format
+
+└ 4.8 DELETE /api/genres/{{genreId}}
+  DELETE http://localhost:9000/api/genres/6ac5ad44e2c1d505aac6faaf [409 Conflict, 515B, 79ms]
+  √  Status 409
+  √  Unified error format
+
+□ 05-Showtime
+└ 5.1 POST /api/showtimes
+  POST http://localhost:9000/api/showtimes [201 Created, 665B, 117ms]
+  √  Status 201
+  √  Computed end time
+
+└ 5.2 POST /api/showtimes
+  POST http://localhost:9000/api/showtimes [409 Conflict, 548B, 222ms]
+  √  Status 409
+  √  Unified error format
+
+└ 5.3 POST /api/showtimes
+  POST http://localhost:9000/api/showtimes [201 Created, 685B, 280ms]
+  √  Status 201
+
+└ 5.4 POST /api/showtimes
+  POST http://localhost:9000/api/showtimes [400 Bad Request, 489B, 306ms]
+  √  Status 400
+  √  Unified error format
+
+└ 5.5 POST /api/showtimes
+  POST http://localhost:9000/api/showtimes [400 Bad Request, 457B, 250ms]
+  √  Status 400
+  √  Unified error format
+
+└ 5.6 POST /api/showtimes
+  POST http://localhost:9000/api/showtimes [400 Bad Request, 472B, 155ms]
+  √  Status 400
+  √  Unified error format
+
+└ 5.7 GET /api/showtimes?movieId={{movieId}}&date={{futureDate}}
+  GET http://localhost:9000/api/showtimes?movieId=6ac5ad46e2c1d505aac6fab2&date=2026-10-14 [200 OK, 1.02kB, 185ms]
+  √  Status 200
+  √  Movie and date filter
+
+└ 5.8 GET /api/showtimes/{{showtimeId}}
+  GET http://localhost:9000/api/showtimes/6ac5ad49e2c1d505aac6fab3 [200 OK, 660B, 169ms]
+  √  Status 200
+  √  Room dimensions
+
+└ 5.9 DELETE /api/showtimes/{{showtime2Id}}
+  DELETE http://localhost:9000/api/showtimes/6ac5ad4ae2c1d505aac6fab4 [204 No Content, 282B, 80ms]
+  √  Status 204
+
+└ 5.10 GET /api/showtimes/{{showtime2Id}}
+  GET http://localhost:9000/api/showtimes/6ac5ad4ae2c1d505aac6fab4 [200 OK, 680B, 129ms]
+  √  Status 200
+  √  Showtime cancelled
+
+└ 5.11 DELETE /api/rooms/{{roomId}}
+  DELETE http://localhost:9000/api/rooms/6ac5ad45e2c1d505aac6fab0 [409 Conflict, 518B, 188ms]
+  √  Status 409
+  √  Unified error format
+
+└ 5.12 DELETE /api/movies/{{movieId}}
+  DELETE http://localhost:9000/api/movies/6ac5ad46e2c1d505aac6fab2 [409 Conflict, 549B, 379ms]
+  √  Status 409
+  √  Unified error format
+
+└ 5.13 POST /api/showtimes
+  POST http://localhost:9000/api/showtimes [404 Not Found, 503B, 112ms]
+  √  Status 404
+  √  Unified error format
+
+□ 06-Booking
+└ 6.1 GET /api/bookings/showtimes/{{showtimeId}}/seats
+  GET http://localhost:9000/api/bookings/showtimes/6ac5ad49e2c1d505aac6fab3/seats [200 OK, 559B, 501ms]
+  √  Status 200
+  √  All 40 seats available
+
+└ 6.2 POST /api/bookings
+  POST http://localhost:9000/api/bookings [201 Created, 910B, 626ms]
+  √  Status 201
+  √  Server prices and snapshot
+
+└ 6.3 POST /api/bookings
+  POST http://localhost:9000/api/bookings [409 Conflict, 513B, 308ms]
+  √  Status 409
+  √  Taken seat identified
+  √  Unified error format
+
+└ 6.4 POST /api/bookings
+  POST http://localhost:9000/api/bookings [400 Bad Request, 501B, 222ms]
+  √  Status 400
+  √  Unified error format
+
+└ 6.5 POST /api/bookings
+  POST http://localhost:9000/api/bookings [400 Bad Request, 501B, 181ms]
+  √  Status 400
+  √  Unified error format
+
+└ 6.6 POST /api/bookings
+  POST http://localhost:9000/api/bookings [400 Bad Request, 493B, 290ms]
+  √  Status 400
+  √  Unified error format
+
+└ 6.7 POST /api/bookings
+  POST http://localhost:9000/api/bookings [404 Not Found, 503B, 169ms]
+  √  Status 404
+  √  Unified error format
+
+└ 6.8 POST /api/bookings
+  POST http://localhost:9000/api/bookings [400 Bad Request, 490B, 870ms]
+  √  Status 400
+  √  Unified error format
+
+└ 6.9 POST /api/bookings
+  POST http://localhost:9000/api/bookings [400 Bad Request, 471B, 80ms]
+  √  Status 400
+  √  Unified error format
+
+└ 6.10 POST /api/bookings
+  POST http://localhost:9000/api/bookings [400 Bad Request, 470B, 71ms]
+  √  Status 400
+  √  Unified error format
+
+└ 6.11 POST /api/bookings
+  POST http://localhost:9000/api/bookings [403 Forbidden, 509B, 32ms]
+  √  Status 403
+
+└ 6.12 POST /api/bookings
+  POST http://localhost:9000/api/bookings [401 Unauthorized, 408B, 18ms]
+  √  Status 401
+
+└ 6.13 POST /api/bookings
+  POST http://localhost:9000/api/bookings [201 Created, 687B, 250ms]
+  √  Status 201
+
+└ 6.14 GET /api/bookings/showtimes/{{showtimeId}}/seats
+  GET http://localhost:9000/api/bookings/showtimes/6ac5ad49e2c1d505aac6fab3/seats [200 OK, 573B, 232ms]
+  √  Status 200
+  √  Seat map reflects bookings
+
+□ 07-History-Cancel
+└ 7.1 GET /api/bookings/my
+  GET http://localhost:9000/api/bookings/my [200 OK, 1.84kB, 163ms]
+  √  Status 200
+  √  Own history sorted
+
+└ 7.2 GET /api/bookings/{{bookingId}}
+  GET http://localhost:9000/api/bookings/4 [403 Forbidden, 492B, 183ms]
+  √  Status 403
+
+└ 7.3 GET /api/bookings/{{bookingId}}
+  GET http://localhost:9000/api/bookings/4 [200 OK, 906B, 203ms]
+  √  Status 200
+
+└ 7.4 PUT /api/bookings/{{booking2Id}}/cancel
+  PUT http://localhost:9000/api/bookings/5/cancel [403 Forbidden, 499B, 101ms]
+  √  Status 403
+
+└ 7.5 PUT /api/bookings/{{booking2Id}}/cancel
+  PUT http://localhost:9000/api/bookings/5/cancel [200 OK, 680B, 198ms]
+  √  Status 200
+  √  Booking cancelled
+
+└ 7.6 PUT /api/bookings/{{booking2Id}}/cancel
+  PUT http://localhost:9000/api/bookings/5/cancel [400 Bad Request, 477B, 135ms]
+  √  Status 400
+  √  Unified error format
+
+└ 7.7 POST /api/bookings
+  POST http://localhost:9000/api/bookings [201 Created, 686B, 262ms]
+  √  Status 201
+
+└ 7.8 GET /api/bookings
+  GET http://localhost:9000/api/bookings [200 OK, 2.91kB, 201ms]
+  √  Status 200
+
+└ 7.9 GET /api/bookings/my
+  GET http://localhost:9000/api/bookings/my [403 Forbidden, 509B, 15ms]
+  √  Status 403
+
+└ 7.10 GET /api/bookings/99999
+  GET http://localhost:9000/api/bookings/99999 [404 Not Found, 490B, 150ms]
+  √  Status 404
+  √  Unified error format
+
+□ 08-Report
+└ 8.1 GET /api/bookings/report?startDate={{today}}&endDate={{today}}
+  GET http://localhost:9000/api/bookings/report?startDate=2026-10-07&endDate=2026-10-07 [200 OK, 2.57kB, 200ms]
+  √  Status 200
+  √  Report totals consistent
+  √  Cancelled excluded
+  √  Bookings and revenue sorted descending
+
+└ 8.2 GET /api/bookings/report?startDate=2026-12-31&endDate=2026-01-01
+  GET http://localhost:9000/api/bookings/report?startDate=2026-12-31&endDate=2026-01-01 [400 Bad Request, 479B, 105ms]
+  √  Status 400
+  √  Unified error format
+
+└ 8.3 GET /api/bookings/report?startDate={{today}}&endDate={{today}}
+  GET http://localhost:9000/api/bookings/report?startDate=2026-10-07&endDate=2026-10-07 [403 Forbidden, 509B, 65ms]
+  √  Status 403
+
+└ 8.4 GET /api/bookings/report?startDate={{today}}
+  GET http://localhost:9000/api/bookings/report?startDate=2026-10-07 [400 Bad Request, 538B, 102ms]
+  √  Status 400
+  √  Unified error format
+
+└ 8.5 GET /api/bookings/report?startDate=2020-01-01&endDate=2020-01-31
+  GET http://localhost:9000/api/bookings/report?startDate=2020-01-01&endDate=2020-01-31 [200 OK, 462B, 134ms]
+  √  Status 200
+  √  Empty period
+
+┌─────────────────────────┬────────────────────┬───────────────────┐
+│                         │           executed │            failed │
+├─────────────────────────┼────────────────────┼───────────────────┤
+│              iterations │                  1 │                 0 │
+├─────────────────────────┼────────────────────┼───────────────────┤
+│                requests │                 86 │                 0 │
+├─────────────────────────┼────────────────────┼───────────────────┤
+│            test-scripts │                 86 │                 0 │
+├─────────────────────────┼────────────────────┼───────────────────┤
+│      prerequest-scripts │                  4 │                 0 │
+├─────────────────────────┼────────────────────┼───────────────────┤
+│              assertions │                152 │                 0 │
+├─────────────────────────┴────────────────────┴───────────────────┤
+│ total run duration: 35.9s                                        │
+├──────────────────────────────────────────────────────────────────┤
+│ total data received: 24.22kB (approx)                            │
+├──────────────────────────────────────────────────────────────────┤
+│ average response time: 234ms [min: 15ms, max: 2.8s, s.d.: 333ms] │
+└──────────────────────────────────────────────────────────────────┘
