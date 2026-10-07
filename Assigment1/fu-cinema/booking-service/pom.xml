@@ -47,6 +47,10 @@
         </dependency>
         <!-- TODO 7.1: OpenFeign -->
         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
@@ -60,6 +64,17 @@
     </dependencies>
 
     <!-- TODO 7.1: BOM quan ly version toan bo thu vien Spring Cloud -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <!-- giong customer-service: maven-compiler-plugin (Lombok) + spring-boot-maven-plugin -->
