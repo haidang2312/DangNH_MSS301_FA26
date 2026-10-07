@@ -128,6 +128,10 @@ public class BookingService {
                 .stream().map(BookingResponse::from).toList();
     }
 
+    // TODO 8.2
+    public BookingResponse getById(Long bookingId, Long userId, String role) {
+        return BookingResponse.from(findAccessible(bookingId, userId, role));
+    }
 
 
 
@@ -164,4 +168,13 @@ public class BookingService {
         }
     }
 
+    /** BR11: Customer chi truy cap booking cua minh, Admin truy cap tat ca */
+    private Booking findAccessible(Long bookingId, Long userId, String role) {
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> ApiException.notFound("Booking not found with id: " + bookingId));
+        if (!ROLE_ADMIN.equals(role) && !booking.getCustomerId().equals(userId)) {
+            throw ApiException.forbidden("You can only access your own bookings");
+        }
+        return booking;
+    }
 }
