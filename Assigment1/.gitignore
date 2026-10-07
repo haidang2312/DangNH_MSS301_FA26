@@ -1,0 +1,7 @@
+Assignment1.md
+Assignment1_Guide.md
+**/target/
+**/docker/*/data/
+.idea/
+*.iml
+.runtime/
