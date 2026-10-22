@@ -44,7 +44,7 @@ services:
     container_name: saga-mongodb
     command: ["--replSet", "rs0", "--bind_ip_all"]   # transaction trong MongoDB cần replica set
     ports:
-      - "27017:27017"
+      - "${MONGO_PORT:-27017}:27017"
     volumes:
       - mongo-data:/data/db
     healthcheck:
@@ -59,7 +59,7 @@ services:
     build: ./inventory-service
     container_name: inventory-service
     ports:
-      - "8082:8082"
+      - "${INVENTORY_PORT:-8082}:8082"
     environment:
       MONGO_URI: mongodb://mongodb:27017/inventorydb?directConnection=true
     depends_on:
@@ -70,7 +70,7 @@ services:
     build: ./payment-service
     container_name: payment-service
     ports:
-      - "8083:8083"
+      - "${PAYMENT_PORT:-8083}:8083"
     environment:
       DB_URL: jdbc:sqlserver://sqlserver:1433;databaseName=paymentdb;encrypt=true;trustServerCertificate=true
       DB_USER: sa
@@ -83,7 +83,7 @@ services:
     build: ./order-service
     container_name: order-service
     ports:
-      - "8081:8081"
+      - "${ORDER_PORT:-8081}:8081"
     environment:
       DB_URL: jdbc:mysql://mysql:3306/orderdb?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
       DB_USER: root
