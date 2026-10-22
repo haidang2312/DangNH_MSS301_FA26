@@ -1,0 +1,14 @@
+{
+  "label": "runner",
+  "requests": {
+    "total": 47,
+    "pending": 0,
+    "failed": 0
+  },
+  "assertions": {
+    "total": 96,
+    "pending": 0,
+    "failed": 0
+  },
+  "failures": []
+}

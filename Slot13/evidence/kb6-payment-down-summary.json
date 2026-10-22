@@ -1,0 +1,14 @@
+{
+  "label": "kb6-payment-down",
+  "requests": {
+    "total": 1,
+    "pending": 0,
+    "failed": 0
+  },
+  "assertions": {
+    "total": 4,
+    "pending": 0,
+    "failed": 0
+  },
+  "failures": []
+}

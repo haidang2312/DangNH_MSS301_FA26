@@ -1,0 +1,14 @@
+{
+  "label": "kb6-verification",
+  "requests": {
+    "total": 3,
+    "pending": 0,
+    "failed": 0
+  },
+  "assertions": {
+    "total": 8,
+    "pending": 0,
+    "failed": 0
+  },
+  "failures": []
+}

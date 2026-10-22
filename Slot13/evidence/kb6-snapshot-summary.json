@@ -1,0 +1,14 @@
+{
+  "label": "kb6-snapshot",
+  "requests": {
+    "total": 2,
+    "pending": 0,
+    "failed": 0
+  },
+  "assertions": {
+    "total": 2,
+    "pending": 0,
+    "failed": 0
+  },
+  "failures": []
+}

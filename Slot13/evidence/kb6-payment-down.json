@@ -1,0 +1,609 @@
+{
+  "collection": {
+    "_": {
+      "postman_id": "f16d65e3-a379-4b63-b5f1-f06fce91c688"
+    },
+    "item": [
+      {
+        "id": "97088b2c-8cb8-4da7-bd80-c01c37053918",
+        "name": "2. Place order",
+        "request": {
+          "url": {
+            "path": [
+              "api",
+              "orders"
+            ],
+            "host": [
+              "{{orderUrl}}"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\"customerId\": \"C1\", \"productId\": \"P2\", \"quantity\": 1, \"amount\": 20}"
+          }
+        },
+        "response": [],
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "bec17bba-685c-473f-be65-065fb6308ecc",
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
+                "const o=pm.response.json();pm.collectionVariables.set('kb6OrderId',o.id);",
+                "pm.test('order status',()=>pm.expect(o.status).to.eql('CANCELLED'));",
+                "pm.test('saga status',()=>pm.expect(o.sagaStatus).to.eql('COMPENSATED'));",
+                "pm.test('failure reason',()=>pm.expect(o.failureReason).to.match(/^Service/));"
+              ],
+              "_lastExecutionId": "259ebe71-e051-477c-872b-5754ee7c9afd"
+            }
+          }
+        ]
+      }
+    ],
+    "event": [],
+    "variable": [
+      {
+        "type": "any",
+        "value": "http://localhost:18081",
+        "key": "orderUrl"
+      },
+      {
+        "type": "any",
+        "value": "http://localhost:18082",
+        "key": "inventoryUrl"
+      },
+      {
+        "type": "any",
+        "value": "http://localhost:18083",
+        "key": "paymentUrl"
+      },
+      {
+        "type": "any",
+        "value": 6,
+        "key": "stock_P1"
+      },
+      {
+        "type": "any",
+        "value": 5,
+        "key": "stock_P2"
+      },
+      {
+        "type": "any",
+        "value": 1000,
+        "key": "bal_C1"
+      },
+      {
+        "type": "any",
+        "value": 100,
+        "key": "bal_C2"
+      }
+    ],
+    "info": {
+      "_postman_id": "f16d65e3-a379-4b63-b5f1-f06fce91c688",
+      "name": "MSS301 - Saga Demo",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    }
+  },
+  "environment": {
+    "id": "6ea99a1e-b7d1-4f61-9c0f-564b00012f70",
+    "values": []
+  },
+  "globals": {
+    "id": "3bef7edf-4ca2-4d10-8fc5-b4097df9caf0",
+    "values": []
+  },
+  "run": {
+    "stats": {
+      "iterations": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "items": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "scripts": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequests": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "requests": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "tests": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "assertions": {
+        "total": 4,
+        "pending": 0,
+        "failed": 0
+      },
+      "testScripts": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequestScripts": {
+        "total": 0,
+        "pending": 0,
+        "failed": 0
+      }
+    },
+    "timings": {
+      "responseAverage": 5140,
+      "responseMin": 5140,
+      "responseMax": 5140,
+      "responseSd": 0,
+      "dnsAverage": 0,
+      "dnsMin": 0,
+      "dnsMax": 0,
+      "dnsSd": 0,
+      "firstByteAverage": 0,
+      "firstByteMin": 0,
+      "firstByteMax": 0,
+      "firstByteSd": 0,
+      "started": 1792664879822,
+      "completed": 1792664885024
+    },
+    "executions": [
+      {
+        "cursor": {
+          "position": 0,
+          "iteration": 0,
+          "length": 1,
+          "cycles": 1,
+          "empty": false,
+          "eof": false,
+          "bof": true,
+          "cr": false,
+          "ref": "857502f3-e04c-4cd0-9ef8-a1383683975f",
+          "httpRequestId": "01123824-7eee-499c-b46a-0307cb6eac17"
+        },
+        "item": {
+          "id": "97088b2c-8cb8-4da7-bd80-c01c37053918",
+          "name": "2. Place order",
+          "request": {
+            "url": {
+              "path": [
+                "api",
+                "orders"
+              ],
+              "host": [
+                "{{orderUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"customerId\": \"C1\", \"productId\": \"P2\", \"quantity\": 1, \"amount\": 20}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "bec17bba-685c-473f-be65-065fb6308ecc",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
+                  "const o=pm.response.json();pm.collectionVariables.set('kb6OrderId',o.id);",
+                  "pm.test('order status',()=>pm.expect(o.status).to.eql('CANCELLED'));",
+                  "pm.test('saga status',()=>pm.expect(o.sagaStatus).to.eql('COMPENSATED'));",
+                  "pm.test('failure reason',()=>pm.expect(o.failureReason).to.match(/^Service/));"
+                ],
+                "_lastExecutionId": "259ebe71-e051-477c-872b-5754ee7c9afd"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "18081",
+            "path": [
+              "api",
+              "orders"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "2f13071f-1c0c-45c7-bb0c-54be31b1ad53",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:18081",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "68",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\"customerId\": \"C1\", \"productId\": \"P2\", \"quantity\": 1, \"amount\": 20}"
+          }
+        },
+        "response": {
+          "id": "2e3c68c5-69a4-48b4-becd-a729444425e1",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Content-Length",
+              "value": "251"
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 22 Oct 2026 10:28:04 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              97,
+              109,
+              111,
+              117,
+              110,
+              116,
+              34,
+              58,
+              50,
+              48,
+              46,
+              48,
+              44,
+              34,
+              99,
+              117,
+              115,
+              116,
+              111,
+              109,
+              101,
+              114,
+              73,
+              100,
+              34,
+              58,
+              34,
+              67,
+              49,
+              34,
+              44,
+              34,
+              102,
+              97,
+              105,
+              108,
+              117,
+              114,
+              101,
+              82,
+              101,
+              97,
+              115,
+              111,
+              110,
+              34,
+              58,
+              34,
+              83,
+              101,
+              114,
+              118,
+              105,
+              99,
+              101,
+              32,
+              107,
+              104,
+              195,
+              180,
+              110,
+              103,
+              32,
+              112,
+              104,
+              225,
+              186,
+              163,
+              110,
+              32,
+              104,
+              225,
+              187,
+              147,
+              105,
+              58,
+              32,
+              73,
+              47,
+              79,
+              32,
+              101,
+              114,
+              114,
+              111,
+              114,
+              32,
+              111,
+              110,
+              32,
+              80,
+              79,
+              83,
+              84,
+              32,
+              114,
+              101,
+              113,
+              117,
+              101,
+              115,
+              116,
+              32,
+              102,
+              111,
+              114,
+              32,
+              92,
+              34,
+              104,
+              116,
+              116,
+              112,
+              58,
+              47,
+              47,
+              112,
+              97,
+              121,
+              109,
+              101,
+              110,
+              116,
+              45,
+              115,
+              101,
+              114,
+              118,
+              105,
+              99,
+              101,
+              58,
+              56,
+              48,
+              56,
+              51,
+              47,
+              97,
+              112,
+              105,
+              47,
+              112,
+              97,
+              121,
+              109,
+              101,
+              110,
+              116,
+              115,
+              47,
+              112,
+              97,
+              121,
+              92,
+              34,
+              58,
+              32,
+              110,
+              117,
+              108,
+              108,
+              34,
+              44,
+              34,
+              105,
+              100,
+              34,
+              58,
+              49,
+              50,
+              44,
+              34,
+              112,
+              114,
+              111,
+              100,
+              117,
+              99,
+              116,
+              73,
+              100,
+              34,
+              58,
+              34,
+              80,
+              50,
+              34,
+              44,
+              34,
+              113,
+              117,
+              97,
+              110,
+              116,
+              105,
+              116,
+              121,
+              34,
+              58,
+              49,
+              44,
+              34,
+              115,
+              97,
+              103,
+              97,
+              83,
+              116,
+              97,
+              116,
+              117,
+              115,
+              34,
+              58,
+              34,
+              67,
+              79,
+              77,
+              80,
+              69,
+              78,
+              83,
+              65,
+              84,
+              69,
+              68,
+              34,
+              44,
+              34,
+              115,
+              116,
+              97,
+              116,
+              117,
+              115,
+              34,
+              58,
+              34,
+              67,
+              65,
+              78,
+              67,
+              69,
+              76,
+              76,
+              69,
+              68,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 5140,
+          "responseSize": 251
+        },
+        "id": "97088b2c-8cb8-4da7-bd80-c01c37053918",
+        "assertions": [
+          {
+            "assertion": "HTTP 200",
+            "skipped": false
+          },
+          {
+            "assertion": "order status",
+            "skipped": false
+          },
+          {
+            "assertion": "saga status",
+            "skipped": false
+          },
+          {
+            "assertion": "failure reason",
+            "skipped": false
+          }
+        ]
+      }
+    ],
+    "transfers": {
+      "responseTotal": 251
+    },
+    "failures": [],
+    "error": null
+  }
+}

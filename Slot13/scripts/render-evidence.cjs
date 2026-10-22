@@ -1,0 +1,8 @@
+const fs=require('node:fs');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const summaries=fs.readdirSync('evidence').filter(n=>n.endsWith('-summary.json')).map(n=>JSON.parse(fs.readFileSync('evidence/'+n,'utf8')));
+const logs=fs.readdirSync('evidence').filter(n=>n.includes('-saga-')&&n.endsWith('.json'));
+const rows=summaries.map(s=>`<tr><td>${esc(s.label)}</td><td>${s.requests.total}</td><td>${s.assertions.total}</td><td>${s.assertions.failed}</td></tr>`).join('');
+const details=logs.map(n=>`<h2>${esc(n)}</h2><table><tr><th>Step</th><th>Result</th><th>Message</th></tr>${JSON.parse(fs.readFileSync('evidence/'+n,'utf8')).map(l=>`<tr><td>${esc(l.step)}</td><td>${esc(l.result)}</td><td>${esc(l.message)}</td></tr>`).join('')}</table>`).join('');
+const html=`<!doctype html><meta charset="utf-8"><title>Saga verification evidence</title><style>body{font:16px system-ui;background:#f5f7fa;color:#18243b;padding:36px;max-width:1100px;margin:auto}h1{font-size:30px}h2{font-size:18px;margin-top:32px}table{width:100%;border-collapse:collapse;background:white}td,th{padding:12px;border:1px solid #d8dfeb;text-align:left}th{background:#e6edf7}p{line-height:1.6}pre{background:white;padding:16px;white-space:pre-wrap}</style><h1>Slot13 - Order Saga verification</h1><p>Actual Newman execution results and persisted saga logs.<br>Contributor: haidang2312 | Spring Boot 4.1.1 | Three databases</p><table><tr><th>Run</th><th>Requests</th><th>Assertions</th><th>Failed assertions</th></tr>${rows}</table><h2>Docker Compose</h2><pre>${esc(fs.readFileSync('evidence/docker-compose-ps.txt','utf8'))}</pre>${details}`;
+fs.writeFileSync('evidence/report.html',html);

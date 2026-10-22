@@ -1,0 +1,7 @@
+NAME                IMAGE                                        COMMAND                  SERVICE             CREATED         STATUS                   PORTS
+inventory-service   saga-demo-inventory-service                  "java -jar /app/app.…"   inventory-service   2 minutes ago   Up 2 minutes             0.0.0.0:18082->8082/tcp
+order-service       saga-demo-order-service                      "java -jar /app/app.…"   order-service       2 minutes ago   Up 2 minutes             0.0.0.0:18081->8081/tcp
+payment-service     saga-demo-payment-service                    "java -jar /app/app.…"   payment-service     2 minutes ago   Up 9 seconds             0.0.0.0:18083->8083/tcp
+saga-mongodb        mongo:8.0                                    "docker-entrypoint.s…"   mongodb             2 minutes ago   Up 2 minutes (healthy)   0.0.0.0:27018->27017/tcp
+saga-mysql          mysql:8.4                                    "docker-entrypoint.s…"   mysql               9 minutes ago   Up 9 minutes (healthy)   33060/tcp, 0.0.0.0:3307->3306/tcp
+saga-sqlserver      mcr.microsoft.com/mssql/server:2022-latest   "/opt/mssql/bin/laun…"   sqlserver           9 minutes ago   Up 9 minutes (healthy)   0.0.0.0:14330->1433/tcp

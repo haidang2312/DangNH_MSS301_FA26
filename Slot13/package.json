@@ -1,0 +1,10 @@
+{
+  "name": "slot13-saga-verification",
+  "private": true,
+  "scripts": {
+    "test": "node scripts/run-postman.cjs"
+  },
+  "devDependencies": {
+    "newman": "6.2.3"
+  }
+}
