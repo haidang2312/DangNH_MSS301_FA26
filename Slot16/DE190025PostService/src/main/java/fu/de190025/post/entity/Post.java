@@ -18,11 +18,11 @@ public class Post {
  private String advertiserPhone;
  public String getAdvertiserPhone() { return advertiserPhone; }
  public void setAdvertiserPhone(String value) { this.advertiserPhone=value; }
- @Temporal(TemporalType.DATE) @Column(name="start_date",nullable=false)
+ @Convert(converter=DateOnlyConverter.class) @Column(name="start_date",nullable=false)
  private java.util.Date startDate;
  public java.util.Date getStartDate() { return startDate; }
  public void setStartDate(java.util.Date value) { this.startDate=value; }
- @Temporal(TemporalType.DATE) @Column(name="end_date",nullable=false)
+ @Convert(converter=DateOnlyConverter.class) @Column(name="end_date",nullable=false)
  private java.util.Date endDate;
  public java.util.Date getEndDate() { return endDate; }
  public void setEndDate(java.util.Date value) { this.endDate=value; }
