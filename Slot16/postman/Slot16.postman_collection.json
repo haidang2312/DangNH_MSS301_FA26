@@ -1,0 +1,708 @@
+{
+  "info": {
+    "name": "DE190025 Slot16 Media Platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ],
+  "item": [
+    {
+      "name": "Create active creator",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/users",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"creator_{{$timestamp}}\",\n  \"email\": \"creator@example.com\",\n  \"role\": \"CREATOR\",\n  \"ratePerPost\": 500000,\n  \"maxDailyPosts\": 3,\n  \"level\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+              "pm.test(\"status 1\", () => pm.expect(pm.response.json().status).to.eql(1));",
+              "pm.test(\"ISO timestamp\", () => pm.expect(Date.parse(pm.response.json().timestamp)).not.to.be.NaN);",
+              "pm.collectionVariables.set(\"userId\", pm.response.json().data.userId);",
+              "pm.collectionVariables.set(\"username\", pm.response.json().data.username);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get creator",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/users/{{userId}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"status 1\", () => pm.expect(pm.response.json().status).to.eql(1));",
+              "pm.test(\"ISO timestamp\", () => pm.expect(Date.parse(pm.response.json().timestamp)).not.to.be.NaN);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Duplicate username",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/users",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"{{username}}\",\n  \"email\": \"creator@example.com\",\n  \"role\": \"CREATOR\",\n  \"ratePerPost\": 500000,\n  \"maxDailyPosts\": 3,\n  \"level\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 226\", () => pm.response.to.have.status(226));",
+              "pm.test(\"status 3\", () => pm.expect(pm.response.json().status).to.eql(3));",
+              "pm.test(\"ISO timestamp\", () => pm.expect(Date.parse(pm.response.json().timestamp)).not.to.be.NaN);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reject invalid email",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/users",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"creator_{{$timestamp}}\",\n  \"email\": \"bad\",\n  \"role\": \"CREATOR\",\n  \"ratePerPost\": 500000,\n  \"maxDailyPosts\": 3,\n  \"level\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 406\", () => pm.response.to.have.status(406));",
+              "pm.test(\"status 2\", () => pm.expect(pm.response.json().status).to.eql(2));",
+              "pm.test(\"ISO timestamp\", () => pm.expect(Date.parse(pm.response.json().timestamp)).not.to.be.NaN);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reject invalid daily limit",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/users/{{userId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"maxDailyPosts\": 11\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 406\", () => pm.response.to.have.status(406));",
+              "pm.test(\"status 2\", () => pm.expect(pm.response.json().status).to.eql(2));",
+              "pm.test(\"ISO timestamp\", () => pm.expect(Date.parse(pm.response.json().timestamp)).not.to.be.NaN);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Partial update creator",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/users/{{userId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"level\": 2\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"status 1\", () => pm.expect(pm.response.json().status).to.eql(1));",
+              "pm.test(\"ISO timestamp\", () => pm.expect(Date.parse(pm.response.json().timestamp)).not.to.be.NaN);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Filter creators",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/users?role=CREATOR&status=ACTIVE&page=0&size=10"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"status 1\", () => pm.expect(pm.response.json().status).to.eql(1));",
+              "pm.test(\"ISO timestamp\", () => pm.expect(Date.parse(pm.response.json().timestamp)).not.to.be.NaN);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reject page size",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/users?size=101"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 406\", () => pm.response.to.have.status(406));",
+              "pm.test(\"status 2\", () => pm.expect(pm.response.json().status).to.eql(2));",
+              "pm.test(\"ISO timestamp\", () => pm.expect(Date.parse(pm.response.json().timestamp)).not.to.be.NaN);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Missing creator",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/users/2147483647"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 404\", () => pm.response.to.have.status(404));",
+              "pm.test(\"status 4\", () => pm.expect(pm.response.json().status).to.eql(4));",
+              "pm.test(\"ISO timestamp\", () => pm.expect(Date.parse(pm.response.json().timestamp)).not.to.be.NaN);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Create campaign",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/posts",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"advertiserName\": \"Shop ABC\",\n  \"advertiserEmail\": \"ads@example.com\",\n  \"advertiserPhone\": \"0900000000\",\n  \"startDate\": \"25/07/2026\",\n  \"endDate\": \"28/07/2026\",\n  \"numberOfPosts\": 2,\n  \"userId\": {{userId}}\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+              "pm.test(\"status 1\", () => pm.expect(pm.response.json().status).to.eql(1));",
+              "pm.test(\"ISO timestamp\", () => pm.expect(Date.parse(pm.response.json().timestamp)).not.to.be.NaN);",
+              "pm.collectionVariables.set(\"postId\", pm.response.json().data.postId);",
+              "pm.test(\"Three day price\", () => pm.expect(pm.response.json().data.totalCost).to.eql(1500000));",
+              "pm.test(\"Scheduled\", () => pm.expect(pm.response.json().data.status).to.eql(\"SCHEDULED\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Campaign detail includes user",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/posts/{{postId}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"status 1\", () => pm.expect(pm.response.json().status).to.eql(1));",
+              "pm.test(\"ISO timestamp\", () => pm.expect(Date.parse(pm.response.json().timestamp)).not.to.be.NaN);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reject invalid dates",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/posts/{{postId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"endDate\": \"24/07/2026\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 406\", () => pm.response.to.have.status(406));",
+              "pm.test(\"status 2\", () => pm.expect(pm.response.json().status).to.eql(2));",
+              "pm.test(\"ISO timestamp\", () => pm.expect(Date.parse(pm.response.json().timestamp)).not.to.be.NaN);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reject daily capacity",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/posts/{{postId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"numberOfPosts\": 4\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 406\", () => pm.response.to.have.status(406));",
+              "pm.test(\"status 2\", () => pm.expect(pm.response.json().status).to.eql(2));",
+              "pm.test(\"ISO timestamp\", () => pm.expect(Date.parse(pm.response.json().timestamp)).not.to.be.NaN);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Update campaign dates",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/posts/{{postId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"endDate\": \"27/07/2026\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"status 1\", () => pm.expect(pm.response.json().status).to.eql(1));",
+              "pm.test(\"ISO timestamp\", () => pm.expect(Date.parse(pm.response.json().timestamp)).not.to.be.NaN);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Filter campaigns",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/posts?advertiserName=Shop&status=SCHEDULED&page=0&size=10"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"status 1\", () => pm.expect(pm.response.json().status).to.eql(1));",
+              "pm.test(\"ISO timestamp\", () => pm.expect(Date.parse(pm.response.json().timestamp)).not.to.be.NaN);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Missing campaign",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/posts/2147483647"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 404\", () => pm.response.to.have.status(404));",
+              "pm.test(\"status 4\", () => pm.expect(pm.response.json().status).to.eql(4));",
+              "pm.test(\"ISO timestamp\", () => pm.expect(Date.parse(pm.response.json().timestamp)).not.to.be.NaN);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Missing creator on booking",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/posts",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"advertiserName\": \"Shop ABC\",\n  \"advertiserEmail\": \"ads@example.com\",\n  \"advertiserPhone\": \"0900000000\",\n  \"startDate\": \"25/07/2026\",\n  \"endDate\": \"28/07/2026\",\n  \"numberOfPosts\": 2,\n  \"userId\": 2147483647\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 404\", () => pm.response.to.have.status(404));",
+              "pm.test(\"status 4\", () => pm.expect(pm.response.json().status).to.eql(4));",
+              "pm.test(\"ISO timestamp\", () => pm.expect(Date.parse(pm.response.json().timestamp)).not.to.be.NaN);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Suspend creator",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/users/{{userId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"SUSPENDED\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"status 1\", () => pm.expect(pm.response.json().status).to.eql(1));",
+              "pm.test(\"ISO timestamp\", () => pm.expect(Date.parse(pm.response.json().timestamp)).not.to.be.NaN);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reject suspended creator",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/posts",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"advertiserName\": \"Shop ABC\",\n  \"advertiserEmail\": \"ads@example.com\",\n  \"advertiserPhone\": \"0900000000\",\n  \"startDate\": \"25/07/2026\",\n  \"endDate\": \"28/07/2026\",\n  \"numberOfPosts\": 2,\n  \"userId\": {{userId}}\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 400\", () => pm.response.to.have.status(400));",
+              "pm.test(\"status 5\", () => pm.expect(pm.response.json().status).to.eql(5));",
+              "pm.test(\"ISO timestamp\", () => pm.expect(Date.parse(pm.response.json().timestamp)).not.to.be.NaN);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cancel campaign",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/posts/{{postId}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"status 1\", () => pm.expect(pm.response.json().status).to.eql(1));",
+              "pm.test(\"ISO timestamp\", () => pm.expect(Date.parse(pm.response.json().timestamp)).not.to.be.NaN);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Deactivate creator",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/users/{{userId}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"status 1\", () => pm.expect(pm.response.json().status).to.eql(1));",
+              "pm.test(\"ISO timestamp\", () => pm.expect(Date.parse(pm.response.json().timestamp)).not.to.be.NaN);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reject deactivated creator",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/posts",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"advertiserName\": \"Shop ABC\",\n  \"advertiserEmail\": \"ads@example.com\",\n  \"advertiserPhone\": \"0900000000\",\n  \"startDate\": \"25/07/2026\",\n  \"endDate\": \"28/07/2026\",\n  \"numberOfPosts\": 2,\n  \"userId\": {{userId}}\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 400\", () => pm.response.to.have.status(400));",
+              "pm.test(\"status 5\", () => pm.expect(pm.response.json().status).to.eql(5));",
+              "pm.test(\"ISO timestamp\", () => pm.expect(Date.parse(pm.response.json().timestamp)).not.to.be.NaN);"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
